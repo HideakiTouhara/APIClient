@@ -13,8 +13,8 @@ typealias Input = Request
 typealias Request = (
     url: URL,
     queries: [URLQueryItem],
-    header: [String : String],
-    httpMethodAndPayload: HTTPMethodAndPayload
+    headers: [String : String],
+    methodAndPayload: HTTPMethodAndPayload
 )
 
 enum HTTPMethodAndPayload {
@@ -33,5 +33,11 @@ enum HTTPMethodAndPayload {
         case .get:
             return nil
         }
+    }
+}
+
+enum WebAPI {
+    static func call(with input: Input) {
+        // TODO: laters
     }
 }
