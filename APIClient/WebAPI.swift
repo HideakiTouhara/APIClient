@@ -41,3 +41,35 @@ enum WebAPI {
         // TODO: laters
     }
 }
+
+enum Output {
+    case hasResponse(Response)
+    case noResponse(ConnectionError)
+}
+
+enum ConnectionError {
+    case noDataOrNoResponse(debugInfo: String)
+}
+
+typealias Response = (
+    statusCode: HTTPStatus,
+    headers: [String: String],
+    payload: Data
+)
+
+enum HTTPStatus {
+    case ok
+    case notFound
+    case unsupported(code: Int)
+
+    static func from(code: Int) -> HTTPStatus {
+        switch code {
+        case 200:
+            return .ok
+        case 404:
+            return .notFound
+        default:
+            return .unsupported(code: code)
+        }
+    }
+}

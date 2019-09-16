@@ -21,4 +21,12 @@ class APIClientTests: XCTestCase {
         WebAPI.call(with: input)
     }
 
+    func testResponse() {
+        let resopnse: Response = (
+            statusCode: .ok,
+            headers: [:],
+            payload: "this is a resonse text".data(using: .utf8)!
+        )
+    }
+
 }
