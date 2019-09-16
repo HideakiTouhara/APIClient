@@ -37,8 +37,30 @@ enum HTTPMethodAndPayload {
 }
 
 enum WebAPI {
+
+    static func call(with input: Input, _ block: @escaping (Output) -> Void) {
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
+            let response: Response = (
+                statusCode: .ok,
+                headers: [:],
+                payload: "this is a response text".data(using: .utf8)!
+            )
+            block(.hasResponse(response))
+        }
+    }
     static func call(with input: Input) {
-        // TODO: laters
+        self.call(with: input) { _ in
+            // do nothing
+        }
+    }
+
+    static private func createURLRequest(by input: Input) -> URLRequest {
+        var request = URLRequest(url: input.url)
+        request.httpMethod = input.methodAndPayload.method
+        request.httpBody = input.methodAndPayload.body
+        request.allHTTPHeaderFields = input.headers
+        return request
+
     }
 }
 
